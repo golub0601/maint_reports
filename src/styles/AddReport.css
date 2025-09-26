@@ -1,0 +1,88 @@
+.report-container {
+  max-width: 95%;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background: #f9f9fb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.report-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+.report-table th {
+  background: #4a90e2;
+  color: #fff;
+  padding: 0.6rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.report-table td {
+  padding: 0.4rem;
+}
+
+.report-table tbody tr:nth-child(even) {
+  background: #f1f5fb;
+}
+
+.report-table input {
+  width: 100%;
+  padding: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.pb-xl{
+    padding-bottom: 5%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.align-it-center{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn.primary {
+  background: #4a90e2;
+  color: white;
+}
+
+.btn.primary:hover {
+  background: #357ab8;
+}
+
+.btn.secondary {
+  background: #ddd;
+  color: #333;
+}
+
+.btn.secondary:hover {
+  background: #ccc;
+}
