@@ -44,6 +44,11 @@ export default function Reports() {
 
   // show reports list
   return (
+    <div>
+    <div className="bg-indigo-500 text-white p-4">
+      Tailwind radi!
+    </div>
+
     <div style={{ padding: "2rem" }}>
       <h2>Reports</h2>
       {reports.length === 0 ? (
@@ -58,6 +63,7 @@ export default function Reports() {
           ))}
         </ul>
       )}
+    </div>
     </div>
   );
 }

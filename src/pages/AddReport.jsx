@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-import "../styles/AddReport.css"; // import CSS file
 
 export default function AddReport() {
   const emptyRow = {
@@ -10,12 +9,12 @@ export default function AddReport() {
     zastojH: "",
     opis: "",
     aktivnosti: "",
-    planirano: "",
     komentar: "",
-    odrzavaoci: ""
+    odrzavaoci: "",
+    smjena: "",
   };
 
-  const [rows, setRows] = useState([{...emptyRow}, {...emptyRow}, {...emptyRow}]);
+  const [rows, setRows] = useState([{ ...emptyRow }, { ...emptyRow }, { ...emptyRow }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -25,7 +24,7 @@ export default function AddReport() {
   };
 
   const addRow = () => {
-    setRows([...rows, emptyRow]);
+    setRows([...rows, { ...emptyRow }]);
   };
 
   const handleSubmit = async (e) => {
@@ -33,7 +32,7 @@ export default function AddReport() {
     try {
       await addDoc(collection(db, "reports"), {
         rows,
-        createdAt: Timestamp.now()
+        createdAt: Timestamp.now(),
       });
       alert("✅ Report saved!");
       setRows([{ ...emptyRow }, { ...emptyRow }, { ...emptyRow }]);
@@ -44,50 +43,76 @@ export default function AddReport() {
   };
 
   return (
-    <div className="report-container">
-      <h2>📝 Smjenski izvjestaj</h2>
+    <div className="max-w-5xl mx-auto p-6 bg-white rounded-xl shadow-md font-sans">
+      <h2 className="text-2xl font-semibold text-center mb-6">📝 Smjenski izvještaj</h2>
       <form onSubmit={handleSubmit}>
-        <table className="report-table">
-          <thead>
-            <tr>
-              <th>Cjelina pogona</th>
-              <th>Uređaj</th> 
-              <th>Zastoj (h)</th>
-              <th>Opis kvara / zastoja</th>
-              <th>Preduzete aktivnosti</th>
-              <th>Planirana aktivnost</th>
-              <th>Komentar</th>
-              <th>Ime održavaoca / smjena</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, i) => (
-              <tr key={i}>
-                {Object.keys(emptyRow).map((field) => (
-                  <td key={field}>
-                    <input
-                      type="text"
-                      name={field}
-                      value={row[field]}
-                      onChange={(e) => handleChange(i, e)}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        {rows.map((row, i) => (
+          <div
+            key={i}
+            className="mb-6 p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+          >
+            {/* Short row */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
+              {["cjelina", "uredjaj", "odrzavaoci", "smjena"].map((field) => (
+                <div key={field} className="flex flex-col">
+                  <label className="text-sm text-gray-600 mb-1 capitalize">{field}</label>
+                  <input
+                    type="text"
+                    name={field}
+                    value={row[field]}
+                    onChange={(e) => handleChange(i, e)}
+                    placeholder={`Unesite ${field}`}
+                    className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+              ))}
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-600 mb-1">Zastoj (h)</label>
+                <input
+                  type="number"
+                  name="zastojH"
+                  value={row.zastojH}
+                  onChange={(e) => handleChange(i, e)}
+                  placeholder="0"
+                  className="border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-20"
+                />
+              </div>
+            </div>
 
-        <div className="align-it-center pb-xl">
-          <button type="button" onClick={addRow} className="btn secondary p-xl">
-            ➕ Add Row
+            {/* Long row */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {["opis", "aktivnosti", "komentar"].map((field) => (
+                <div key={field} className="flex flex-col">
+                  <label className="text-sm text-gray-600 mb-1 capitalize">{field}</label>
+                  <textarea
+                    name={field}
+                    value={row[field]}
+                    onChange={(e) => handleChange(i, e)}
+                    placeholder={`Unesite ${field}`}
+                    className="border border-gray-300 rounded-md p-2 text-sm h-20 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Buttons */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <button
+            type="button"
+            onClick={addRow}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+          >
+            ➕ Dodaj red
           </button>
-        </div>
-        <hr />
-        <div className="buttons">
-            <button type="submit" className="btn primary">
-              ✅ Submit Report
-            </button>
+
+          <button
+            type="submit"
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+          >
+            ✅ Sacuvaj izvještaj
+          </button>
         </div>
       </form>
     </div>
