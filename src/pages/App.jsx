@@ -1,39 +1,40 @@
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
-  const gradients = [
-    "bg-gradient-to-br from-lime-400 to-cyan-400",
-    "bg-gradient-to-br from-emerald-400 to-indigo-500",
-    "bg-gradient-to-br from-teal-400 to-cyan-500",
-    "bg-gradient-to-br from-green-800 to-lime-500",
-    "bg-gradient-to-br from-blue-400 to-teal-500",
-    "bg-gradient-to-br from-teal-400 to-emerald-200",
-  ];
+  // Single glassmorphism style
+  const glassStyle = "bg-white/10 backdrop-blur-lg border border-white/20";
 
-  let gradientIndex = 0;
-  const getGradient = () => gradients[gradientIndex++ % gradients.length];
-
-  const Widget = ({ gradient, colSpan }) => {
+  const Widget = ({ colSpan }) => {
     const colClass = {
       12: "lg:col-span-12",
       6: "lg:col-span-6",
+      5: "lg:col-span-5",
       4: "lg:col-span-4",
       3: "lg:col-span-3",
+      2: "lg:col-span-2",
+
     }[colSpan] || "lg:col-span-3";
 
     return (
-      <div className={`col-span-12 ${colClass} ${gradient} rounded-xl shadow-lg p-6 text-white text-center`}>
-        <h1 className="text-3xl font-bold mb-2">Continuous <span className="text-emerald-800">Reports</span></h1>
-        <p className="text-white/80 mb-4">Keep track of all your maintenance records</p>
-        <div className="flex gap-4 justify-center">
+      <div
+        className={`col-span-12 ${colClass} ${glassStyle} rounded-2xl shadow-xl 
+        p-6 text-white text-center transition transform hover:scale-102 hover:shadow-2xl`}
+      >
+        <h1 className="text-3xl font-extrabold mb-2 tracking-tight">
+          Continuous <span className="text-cyan-500">Reports</span>
+        </h1>
+        <p className="text-white/70 mb-6">
+          Keep track of all your maintenance records
+        </p>
+        <div className="flex gap-6 justify-center">
           <Link to="/add">
-            <button className="px-5 py-2.5 rounded-xl bg-white text-lime-600 font-medium shadow hover:bg-white/90 transition">
-              ➕ Add Report
+            <button className="hover:shadow-cyan-100 px-5 py-2.5 rounded-2xl border border-white/30 bg-white/20 text-blue-50 font-medium shadow hover:bg-white/60 hover:border-white/40 transition">
+              Add Report
             </button>
           </Link>
           <Link to="/reports">
-            <button className="px-5 py-2.5 rounded-xl bg-white text-lime-600 font-medium shadow hover:bg-white/90 transition">
-              📜 View Reports
+            <button className="hover:shadow-cyan-100 px-5 py-2.5 rounded-2xl border border-white/30 bg-white/20 text-blue-50 font-medium shadow hover:bg-white/60 hover:border-white/40 transition">
+              View Reports
             </button>
           </Link>
         </div>
@@ -42,33 +43,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-900 via-slate-700 to-black">
       <div className="grid grid-cols-12 gap-6">
-        {/* Row 1: 2 widgets */}
-        <Widget gradient={getGradient()} colSpan={6} />
-        <Widget gradient={getGradient()} colSpan={6} />
+        {/* Row 1: 2 widgets */}  
+        <Widget colSpan={3} />
+        <Widget colSpan={3} />
+        <Widget colSpan={6} />
 
         {/* Row 2: 4 widgets */}
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
+        <Widget colSpan={5} />
+        <Widget colSpan={3} />
+        <Widget colSpan={4} />
 
         {/* Row 3: 3 widgets */}
-        <Widget gradient={getGradient()} colSpan={4} />
-        <Widget gradient={getGradient()} colSpan={4} />
-        <Widget gradient={getGradient()} colSpan={4} />
+        <Widget colSpan={4} />
+        <Widget colSpan={3} />
+        <Widget colSpan={5} />
 
         {/* Row 4: 1 widget */}
-        <Widget gradient={getGradient()} colSpan={12} />
-
-        {/* Repeat first two rows */}
-        <Widget gradient={getGradient()} colSpan={6} />
-        <Widget gradient={getGradient()} colSpan={6} />
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
-        <Widget gradient={getGradient()} colSpan={3} />
+        <Widget colSpan={12} />
+        
+        
       </div>
     </div>
   );
