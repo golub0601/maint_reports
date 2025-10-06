@@ -17,8 +17,8 @@ export default function Dashboard() {
 
     return (
       <div
-        className={`col-span-12 ${colClass} ${glassStyle} rounded-2xl shadow-xl 
-        p-6 text-white text-center transition transform hover:scale-102 hover:shadow-2xl`}
+        className={`col-span-12 ${colClass} ${glassStyle} rounded-2xl shadow-lg shadow-black 
+        p-6 text-white text-center transition transform hover:scale-102 hover:shadow-xl`}
       >
         <h1 className="text-3xl font-extrabold mb-2 tracking-tight">
           Continuous <span className="text-cyan-500">Reports</span>
@@ -43,7 +43,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-indigo-900 via-slate-700 to-black">
+    <div className="p-6">
       <div className="grid grid-cols-12 gap-6">
         {/* Row 1: 2 widgets */}  
         <Widget colSpan={3} />
@@ -59,9 +59,6 @@ export default function Dashboard() {
         <Widget colSpan={4} />
         <Widget colSpan={3} />
         <Widget colSpan={5} />
-
-        {/* Row 4: 1 widget */}
-        <Widget colSpan={12} />
         
         
       </div>

@@ -1,8 +1,16 @@
 import { useState } from "react";
 import { db } from "../firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { usePageInfo } from "../hooks/usePageInfo";
 
 export default function AddReport() {
+  // Set title and shift in Layout
+  usePageInfo({
+    title: "📝 Dodaj smjenski izvještaj",
+    shift: "Smjena B",
+    showBack: true,
+  });
+
   const emptyRow = {
     cjelina: "",
     uredjaj: "",
@@ -14,7 +22,7 @@ export default function AddReport() {
     smjena: "",
   };
 
-  const [rows, setRows] = useState([{ ...emptyRow }, { ...emptyRow }, { ...emptyRow }]);
+  const [rows, setRows] = useState([{ ...emptyRow }]);
 
   const handleChange = (index, e) => {
     const { name, value } = e.target;
@@ -23,9 +31,7 @@ export default function AddReport() {
     setRows(updatedRows);
   };
 
-  const addRow = () => {
-    setRows([...rows, { ...emptyRow }]);
-  };
+  const addRow = () => setRows([...rows, { ...emptyRow }]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,12 +49,8 @@ export default function AddReport() {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-purple-900 via-cyan-900 to-purple-950 text-white">
+    <div className="min-h-screen p-6 text-white">
       <div className="max-w-6xl mx-auto p-8 rounded-2xl bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl">
-        <h2 className="text-3xl font-extrabold text-center mb-8 tracking-tight">
-          📝 <span className="text-amber-400">Smjenski izvještaj</span>
-        </h2>
-
         <form onSubmit={handleSubmit} className="space-y-8">
           {rows.map((row, i) => (
             <div
@@ -59,9 +61,7 @@ export default function AddReport() {
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
                 {["cjelina", "uredjaj", "odrzavaoci", "smjena"].map((field) => (
                   <div key={field} className="flex flex-col">
-                    <label className="text-sm text-gray-300 mb-1 capitalize">
-                      {field}
-                    </label>
+                    <label className="text-sm text-gray-300 mb-1 capitalize">{field}</label>
                     <input
                       type="text"
                       name={field}
@@ -89,9 +89,7 @@ export default function AddReport() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {["opis", "aktivnosti", "komentar"].map((field) => (
                   <div key={field} className="flex flex-col">
-                    <label className="text-sm text-gray-300 mb-1 capitalize">
-                      {field}
-                    </label>
+                    <label className="text-sm text-gray-300 mb-1 capitalize">{field}</label>
                     <textarea
                       name={field}
                       value={row[field]}
@@ -110,14 +108,14 @@ export default function AddReport() {
             <button
               type="button"
               onClick={addRow}
-              className="px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-amber-300 font-medium shadow hover:bg-white/20 transition transform hover:scale-105"
+              className="px-4 py-2 rounded-2xl bg-amber-500/90 border border-white/20 text-indigo-100 font-medium shadow transition transform hover:scale-105"
             >
-              ➕ Dodaj red
+              ➕ Dodaj aktivnost
             </button>
 
             <button
               type="submit"
-              className="px-6 py-2 rounded-lg bg-gradient-to-r from-green-200 to-amber-400 text-cyan-950 font-semibold shadow hover:opacity-90 transition transform hover:scale-105"
+              className="px-6 py-2 rounded-2xl bg-gradient-to-r from-green-600 to-green-700 text-cyan-50 font-semibold shadow hover:opacity-90 transition transform hover:scale-105"
             >
               ✅ Sačuvaj izvještaj
             </button>
